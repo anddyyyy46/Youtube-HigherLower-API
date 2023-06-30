@@ -1,6 +1,7 @@
 import express from "express";
 import mongodb from "mongodb";
 import fetch from "node-fetch";
+import cors from "cors";
 
 const key = "AIzaSyAEmYkosB6Anv2wTMJ6CLgsPeroBerhnfA";
 
@@ -10,6 +11,8 @@ const db = client.db("yt");
 const ytCollection = db.collection("youtube");
 
 const app = express();
+
+app.use(cors())
 
 async function getNumbers(){
     await client.connect()
