@@ -42,9 +42,9 @@ async function getNumbers(){
 app.get("/getViewsThumbnail", async(req, res)=>{
     
     
-    const vidId = await getNumbers()
+    const vidId = "9EKvatZhqwU"//await getNumbers()
 
-    let channelTitle, videoTitel, publishedAt, views, thumbnailURL;
+    let channelTitle, videoTitel, publishedAt="", views = "", thumbnailURL;
     const urlVideo = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2C%20statistics&id=${vidId}&key=${key}`;
     await fetch(urlVideo).then((res)=> res.json().then((data)=> {
         channelTitle = data.items[0].snippet.channelTitle;
@@ -53,10 +53,26 @@ app.get("/getViewsThumbnail", async(req, res)=>{
         views = data.items[0].statistics.viewCount
         thumbnailURL = data.items[0].snippet.thumbnails.high.url //ist besser gibt es aber nur fast immer thumbnailURL = data.items[0].snippet.thumbnails.maxres.url;
     }))
-    publishedAt = publishedAt+"".substring(0,9)
-    
-    res.send({"channelTitle": channelTitle, "videoTitel": videoTitel, "publishedAt": publishedAt, "views": views, "thumbnailURL": thumbnailURL, "videoId": vidId})
+    res.send({"channelTitle": channelTitle, "videoTitel": videoTitel, "publishedAt": publishedAt.substring(0,10), "views": await formattedNumber(views), "thumbnailURL": thumbnailURL, "videoId": vidId})
 })
+
+const formattedNumber = async(number)=>{
+    let numberReversed = ""
+    let counter = 0
+    for (let index = number.length-1; index >=0; index--) {
+        numberReversed += number.charAt(index)
+        counter++;
+        if(counter==3){
+            numberReversed += " "
+            counter = 0
+        }
+    }
+    let numberFormatted = ""
+    for (let index = numberReversed.length-1; index >=0; index--) {
+        numberFormatted += numberReversed.charAt(index)
+    }
+    return numberFormatted
+}
 
 app.listen(5050, ()=>{
     console.log("listening on port 5050")
