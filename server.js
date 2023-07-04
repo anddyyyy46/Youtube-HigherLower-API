@@ -53,6 +53,7 @@ app.get("/getViewsThumbnail", async(req, res)=>{
         views = data.items[0].statistics.viewCount
         thumbnailURL = data.items[0].snippet.thumbnails.high.url //ist besser gibt es aber nur fast immer thumbnailURL = data.items[0].snippet.thumbnails.maxres.url;
     }))
+    publishedAt = publishedAt+"".substring(0,9)
     
     res.send({"channelTitle": channelTitle, "videoTitel": videoTitel, "publishedAt": publishedAt, "views": views, "thumbnailURL": thumbnailURL, "videoId": vidId})
 })
