@@ -42,7 +42,7 @@ async function getNumbers(){
 app.get("/getViewsThumbnail", async(req, res)=>{
     
     
-    const vidId = "9EKvatZhqwU"//await getNumbers()
+    const vidId = await getNumbers()
 
     let channelTitle, videoTitel, publishedAt="", views = "", thumbnailURL;
     const urlVideo = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2C%20statistics&id=${vidId}&key=${key}`;
