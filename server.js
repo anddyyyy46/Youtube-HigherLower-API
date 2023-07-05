@@ -53,10 +53,10 @@ app.get("/getViewsThumbnail", async(req, res)=>{
         views = data.items[0].statistics.viewCount
         thumbnailURL = data.items[0].snippet.thumbnails.high.url //ist besser gibt es aber nur fast immer thumbnailURL = data.items[0].snippet.thumbnails.maxres.url;
     }))
-    res.send({"channelTitle": channelTitle, "videoTitel": videoTitel, "publishedAt": publishedAt.substring(0,10), "views": await formattedNumber(views), "thumbnailURL": thumbnailURL, "videoId": vidId})
+    res.send({"channelTitle": channelTitle, "videoTitel": videoTitel, "publishedAt": publishedAt.substring(0,10), "views": views, "thumbnailURL": thumbnailURL, "videoId": vidId})
 })
 
-const formattedNumber = async(number)=>{
+/*const formattedNumber = async(number)=>{
     let numberReversed = ""
     let counter = 0
     for (let index = number.length-1; index >=0; index--) {
@@ -73,6 +73,7 @@ const formattedNumber = async(number)=>{
     }
     return numberFormatted
 }
+*/
 
 app.listen(5050, ()=>{
     console.log("listening on port 5050")
