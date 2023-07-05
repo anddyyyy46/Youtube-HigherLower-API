@@ -62,7 +62,7 @@ const formattedNumber = async(number)=>{
     for (let index = number.length-1; index >=0; index--) {
         numberReversed += number.charAt(index)
         counter++;
-        if(counter==3){
+        if(counter===3 && index>=1){
             numberReversed += " "
             counter = 0
         }
