@@ -75,6 +75,9 @@ app.get("/getViewsThumbnail", async(req, res)=>{
 }
 */
 
+
 app.listen(5050, ()=>{
     console.log("listening on port 5050")
 })
+
+export default app;
