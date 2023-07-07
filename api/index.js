@@ -3,9 +3,9 @@ import mongodb from "mongodb";
 import fetch from "node-fetch";
 import cors from "cors";
 
-const key = "AIzaSyAEmYkosB6Anv2wTMJ6CLgsPeroBerhnfA";
+const key = process.env.API_KEY;
 
-const mongoUrl = "mongodb+srv://andy:HY7R9slqLwy2x1Gx@cluster0.pehv5kt.mongodb.net/?retryWrites=true&w=majority";
+const mongoUrl = process.env.MONGODB_URL;
 const client = new mongodb.MongoClient(mongoUrl);
 const db = client.db("yt");
 const ytCollection = db.collection("youtube");
