@@ -15,32 +15,21 @@ const app = express();
 app.use(cors())
 
 async function getNumbers(){
+
     await client.connect()
     const cursor = ytCollection.aggregate([{$sample : {size:1}}]);
-    
-    let vidId;
+
     let channelVidsData = []
-    for await (const doc of cursor){
-        channelVidsData = doc;
-        //vidId = doc.vidInfos[rndNumberPart].items[rndNumberVid].id.videoId;
-    }
-    console.log(channelVidsData)
-    console.log(channelVidsData.ytChannel)
-    console.log(channelVidsData.vidInfos.length)
+    for await (const doc of cursor) channelVidsData = doc;
     const rndNumberPart = Math.floor(Math.random()*channelVidsData.vidInfos.length);
-    const rndNumberVid = Math.floor(Math.random()*channelVidsData.vidInfos[rndNumberPart].items.length);//das letzte Objekt (eigentlich nur von letzten part) ist kein video
-    console.log(rndNumberPart)
-    console.log(rndNumberVid);
+    const rndNumberVid = Math.floor(Math.random()*channelVidsData.vidInfos[rndNumberPart].items.length);
     const itemKind = channelVidsData.vidInfos[rndNumberPart].items[rndNumberVid].id.kind
-    console.log(itemKind)
-    if(itemKind !== "youtube#video") return await getNumbers()
-    vidId = channelVidsData.vidInfos[rndNumberPart].items[rndNumberVid].id.videoId
-    console.log(vidId)
-    return vidId
+    if(itemKind !== "youtube#video") return await getNumbers() //In case it's not a youtube video it's gonna roll again
+
+    return channelVidsData.vidInfos[rndNumberPart].items[rndNumberVid].id.videoId
 }
 
-app.get("/getViewsThumbnail", async(req, res)=>{
-    
+app.get("/getVidData", async(req, res)=>{
     
     const vidId = await getNumbers()
 
@@ -53,28 +42,9 @@ app.get("/getViewsThumbnail", async(req, res)=>{
         views = data.items[0].statistics.viewCount
         thumbnailURL = data.items[0].snippet.thumbnails.high.url //ist besser gibt es aber nur fast immer thumbnailURL = data.items[0].snippet.thumbnails.maxres.url;
     }))
+
     res.send({"channelTitle": channelTitle, "videoTitel": videoTitel, "publishedAt": publishedAt.substring(0,10), "views": views, "thumbnailURL": thumbnailURL, "videoId": vidId})
 })
-
-/*const formattedNumber = async(number)=>{
-    let numberReversed = ""
-    let counter = 0
-    for (let index = number.length-1; index >=0; index--) {
-        numberReversed += number.charAt(index)
-        counter++;
-        if(counter===3 && index>=1){
-            numberReversed += " "
-            counter = 0
-        }
-    }
-    let numberFormatted = ""
-    for (let index = numberReversed.length-1; index >=0; index--) {
-        numberFormatted += numberReversed.charAt(index)
-    }
-    return numberFormatted
-}
-*/
-
 
 app.listen(5050, ()=>{
     console.log("listening on port 5050")
