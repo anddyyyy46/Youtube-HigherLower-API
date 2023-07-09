@@ -1,24 +1,22 @@
 import fetch from "node-fetch";
 import mongodb from "mongodb";
 
-const key = process.env.API_KEY;
-const mongoUrl = process.env.MONGODB_UR
+const key = "AIzaSyAAxVQb-kUhzKFWWVzRndBBTk7sgzlYFrk"//process.env.API_KEY;
+const mongoUrl = "mongodb+srv://devandy:xCxeF9BrA8VkLs5r@cluster0.pehv5kt.mongodb.net/?retryWrites=true&w=majority"//process.env.MONGODB_URL
 const client = new mongodb.MongoClient(mongoUrl);
 const db = client.db("yt");
 const ytCollection = db.collection("youtube");
 
-const channelName = ""; //add a channelName to get the channeldid or just add the channelid manually
-const channelId = ""; //some channelids can be found with the name and some can't, in this case manually it's need to be manually inserted or use a script (not implemented yet)
-let idneeded = false;
+const channelName = "Apple"; //add a channelName to get the channeldid or just add the channelid manually
 
 main()
+
 /**
  * if the channelid cant be found by the username its using the manually added channelId
  */
 async function main(){
-    const funcChannelId = await getChannelId(channelName)
-    if(idneeded && channelId) await get200VideoIds(channelId)
-    else await get200VideoIds(funcChannelId)
+    console.log(await getChannelId(channelName))
+    await get200VideoIds(await getChannelId(channelName))
 }
 
 /**
@@ -27,17 +25,10 @@ async function main(){
  * @returns {String} channeldId
  */
 async function getChannelId(channelName){
-    const channelUrl = `https://youtube.googleapis.com/youtube/v3/channels?part=id&forUsername=${channelName}&key=${key}`;
-    let channelId;
-    await fetch(channelUrl).then((res) => res.json()).then((channelListResponse) => {
-        try {
-        channelId = channelListResponse.items[0].id
-    } catch (error) {
-        console.log(error)
-        console.log("Please fill in the channelId manually")
-        idneeded = true
-    }});
-    return channelId;
+    const response = await fetch("https://www.youtube.com/@"+channelName)
+    const html = await response.text()
+    const searchTerm = "?channel_id"
+    return html.substring(html.indexOf(searchTerm)+searchTerm.length+1, html.indexOf(searchTerm)+searchTerm.length+25)
 }
 
 
