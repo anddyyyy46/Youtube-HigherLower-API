@@ -1,13 +1,13 @@
 import fetch from "node-fetch";
 import mongodb from "mongodb";
 
-const key = "AIzaSyAAxVQb-kUhzKFWWVzRndBBTk7sgzlYFrk"//process.env.API_KEY;
-const mongoUrl = "mongodb+srv://devandy:xCxeF9BrA8VkLs5r@cluster0.pehv5kt.mongodb.net/?retryWrites=true&w=majority"//process.env.MONGODB_URL
+const key = process.env.API_KEY;
+const mongoUrl = process.env.MONGODB_URL
 const client = new mongodb.MongoClient(mongoUrl);
 const db = client.db("yt");
 const ytCollection = db.collection("youtube");
 
-const channelName = "Apple"; //add a channelName to get the channeldid or just add the channelid manually
+const channelName = "MaxFosh"; //add a channelName to get the channeldid or just add the channelid manually
 
 main()
 
