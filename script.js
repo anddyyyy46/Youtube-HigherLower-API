@@ -7,7 +7,7 @@ const client = new mongodb.MongoClient(mongoUrl);
 const db = client.db("yt");
 const ytCollection = db.collection("youtube");
 
-const channelName = "MaxFosh"; //add a channelName to get the channeldid or just add the channelid manually
+const channelName = ""; //add a channelName to get the channeldid or just add the channelid manually
 
 main()
 
