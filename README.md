@@ -3,6 +3,7 @@
   was filled by script.js and uses this id to get several data about the video from the youtube API.
 
 ### Live-Demo: https://youtube-higher-lower-api.vercel.app/getVidData
+![image](https://github.com/anddyyyy46/Youtube-HigherLower-API/assets/132681533/6bea456c-0247-4927-b770-13a945703594)
 ### Live-Demo with FrontEnd: https://youtube-higher-lower-frontend.vercel.app/
 ![image](https://github.com/anddyyyy46/Youtube-HigherLower-API/assets/132681533/82ddb860-0b2d-499c-ae7d-b39b9db2f105)
 
