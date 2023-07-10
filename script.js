@@ -2,7 +2,7 @@ import fetch from "node-fetch";
 import mongodb from "mongodb";
 
 const key = process.env.API_KEY;
-const mongoUrl = process.env.MONGODB_URL
+const mongoUrl = process.env.MONGODB_URL;
 const client = new mongodb.MongoClient(mongoUrl);
 const db = client.db("yt");
 const ytCollection = db.collection("youtube");
@@ -15,8 +15,8 @@ main()
  * if the channelid cant be found by the username its using the manually added channelId
  */
 async function main(){
-    console.log(await getChannelId(channelName))
-    await get200VideoIds(await getChannelId(channelName))
+    console.log(await getChannelId(channelName));
+    await get200VideoIds(await getChannelId(channelName));
 }
 
 /**
@@ -25,10 +25,10 @@ async function main(){
  * @returns {String} channeldId
  */
 async function getChannelId(channelName){
-    const response = await fetch("https://www.youtube.com/@"+channelName)
-    const html = await response.text()
-    const searchTerm = "?channel_id"
-    return html.substring(html.indexOf(searchTerm)+searchTerm.length+1, html.indexOf(searchTerm)+searchTerm.length+25)
+    const response = await fetch("https://www.youtube.com/@"+channelName);
+    const html = await response.text();
+    const searchTerm = "?channel_id";
+    return html.substring(html.indexOf(searchTerm)+searchTerm.length+1, html.indexOf(searchTerm)+searchTerm.length+25);
 }
 
 
@@ -54,6 +54,6 @@ async function get200VideoIds(channelId){
     await client.connect();
     await ytCollection.insertOne(objLastVidsInfos);
     await client.close();
-    console.log("worked")
+    console.log("worked");
 }
 
