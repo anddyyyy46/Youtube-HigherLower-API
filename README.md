@@ -12,6 +12,20 @@
   Therefore we need the channelid, that a script gets by searching it in the html from a channelpage.<br>
   Now with the id we can send a request to the search endpoint from the youtube API and ask for the video data.<br>
   After we got all the data, it's getting saved in a MongoDB database.
+## Installation:
+```
+git clone url
+npm install
+```
+to run the API:
+```
+cd api
+node index.js
+```
+to run the script:
+```
+node script.js
+```
   
   
 
