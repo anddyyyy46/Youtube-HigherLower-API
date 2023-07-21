@@ -15,7 +15,7 @@
   After we got all the data, it's getting saved in a MongoDB database.
 ## Installation:
 ```
-git clone url
+git clone https://github.com/anddyyyy46/Youtube-HigherLower-API.git
 npm install
 ```
 to run the API:
